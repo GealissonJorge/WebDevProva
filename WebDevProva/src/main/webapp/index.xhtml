@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Cadastro de Livros</title>
+    </h:head>
+    <h:body>
+                <h1>Livros no Banco da Dados</h1>
+                <div>
+                    <h:form id="form1">
+                        <p:dataTable id="tabelalivros" widgetVar="tabelalivros" var="livro" value="#{livroBean.allLivro}" paginator="true" resizableColumns="true" scrollHeight="150" rowKey="#{livro.id}" selectionMode="single" selection="#{livroBean.selectedLivro}"  reflow="true" filteredValue="#{livroBean.filteredLivro}" size="small" style="width: auto">
+            <f:facet name="header">
+                <div id="searchlivro" class="search">
+                    <h3>Selecione uma opção e pressione deletar</h3>
+                    
+                    <span class="filter-container ui-input-icon-left" >
+                            <i class="pi pi-search" />
+                            <p:inputText 
+                                id="globalFilter" 
+                                onkeyup="PF('tabelalivros').filter()" 
+                                placeholder="Pesquisar"/>
+                    </span>
+                </div>
+            </f:facet>
+                        <p:column headerText="ID">
+                            <h:outputText value="#{livro.id}" />
+                        </p:column>
+                        <p:column headerText="Nome do livro" field="Nome"  filterStyle="display: none;">
+                            <h:outputText value="#{livro.nome}" />
+                        </p:column>
+                      <p:column headerText="Lançamentos" style="width: 15%">                        
+                         
+                                <h:outputText id="data" value="#{livro.lancamento}"  >
+                                  <f:convertDateTime type="localDateTime"  pattern="dd/MM/yyyy" />                           
+                              </h:outputText><br/>
+                        </p:column>   
+                                              
+                    </p:dataTable> 
+                    <p:contextMenu for="tabelalivros">
+            <p:menuitem value="Delete" update="tabelalivros" icon="pi pi-times"
+                        action="#{livroBean.MoverAtualLixeira()}"/>
+            
+            </p:contextMenu>
+                        <p:commandButton id="deletar" icon="pi pi-trash"  title="Deletar"  action="#{livroBean.MoverAtualLixeira()}" style="margin-left: 48%" oncomplete="#{livroBean.reset()}" > <p:confirm
+                            type="popup"
+                            header="Deseja realmente remover?"
+                            message="Remover?"
+                            icon="pi pi-exclamation-triangle"
+                            />
+                      </p:commandButton>
+                        &nbsp;
+                        <p:commandButton id="editar" title="Editar"  icon="pi pi-pencil" actionListener="#{livroBean.loadLivro(livro)}" update=":form2:painel-1"/>  
+                      <p:confirmPopup global="true">
+            <p:commandButton value="Não" type="button" styleClass="ui-confirm-popup-no ui-button-flat"/>
+            <p:commandButton value="Sim" type="button" styleClass="ui-confirm-popup-yes" />
+        </p:confirmPopup>
+                </h:form>     
+                </div>
+                <h1>Cadastrar de Livro</h1>
+                
+                <div style="display: flex; justify-content: center; margin-top: .5em;">
+                <h:form id="form2" >
+                    <p:panelGrid id="painel-1"  columns="2" style="width: auto" >
+                        <p:outputLabel value="Nome:" />
+                        <p:inputText value="#{livroBean.selectedLivro.nome}"/>
+                        
+                        <p:outputLabel value="Data de Lançamento:" />
+                        <p:datePicker id="data" value="#{livroBean.selectedLivro.lancamento}"  mask="true"  maskSlotChar="_" pattern="dd/MM/yyyy" showButtonBar="true"/>
+                        
+                                                                                         
+                        
+                    </p:panelGrid>                 
+                    <p:commandButton id="save" icon="pi pi-save" style="margin-left: 55%" title="salvar" process="@form" action="#{livroBean.salvarAtual()}" update=":form1:tabelalivros"/>                 
+                </h:form>
+                 </div> 
+    </h:body>
+</html>
+
