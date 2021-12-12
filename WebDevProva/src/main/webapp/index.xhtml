@@ -11,7 +11,7 @@
                 <h1>Livros no Banco da Dados</h1>
                 <div>
                     <h:form id="form1">
-                        <p:dataTable id="tabelalivros" widgetVar="tabelalivros" var="livro" value="#{livroBean.allLivro}" paginator="true" resizableColumns="true" scrollHeight="150" rowKey="#{livro.id}" selectionMode="single" selection="#{livroBean.selectedLivro}"  reflow="true" filteredValue="#{livroBean.filteredLivro}" size="small" style="width: auto">
+                        <p:dataTable id="tabelalivros" widgetVar="tabelalivros" var="livro" value="#{livroBean.allLivro}" paginator="true" resizableColumns="true" scrollHeight="150" rowKey="#{livro.id}" selectionMode="single" selection="#{livroBean.selectedLivro}"  reflow="true"  size="small" style="width: auto">
             <f:facet name="header">
                 <div id="searchlivro" class="search">
                     <h3>Selecione uma opção e pressione deletar</h3>
@@ -28,13 +28,13 @@
                         <p:column headerText="ID">
                             <h:outputText value="#{livro.id}" />
                         </p:column>
-                        <p:column headerText="Nome do livro" field="Nome"  filterStyle="display: none;">
+                            <p:column headerText="Nome do livro" field="Nome" filterBy="#{livro.nome}" filterStyle="display: none;">
                             <h:outputText value="#{livro.nome}" />
                         </p:column>
                       <p:column headerText="Lançamentos" style="width: 15%">                        
                          
                                 <h:outputText id="data" value="#{livro.lancamento}"  >
-                                  <f:convertDateTime type="localDateTime"  pattern="dd/MM/yyyy" />                           
+                                  <f:convertDateTime type="localDate"  pattern="dd/MM/yyyy" />                           
                               </h:outputText><br/>
                         </p:column>   
                                               
