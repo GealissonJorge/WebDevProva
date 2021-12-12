@@ -37,6 +37,7 @@ public class LivroBean implements Serializable{
         if(selectedLivro==null){
             selectedLivro = new Livro();
         }
+        
     }
     
     public Livro getSelectedLivro() {
@@ -116,4 +117,6 @@ public class LivroBean implements Serializable{
         }
         
     }
+    
+    
 }
